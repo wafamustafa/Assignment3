@@ -1,0 +1,14 @@
+﻿@model Assignment3_N01450753_WafaMustafa_5101B.Models.Students
+@{
+    ViewBag.Title = "ShowStudents";
+}
+
+<h1><a href="/Student/ListStudents">Show More Students</a></h1>
+
+
+<div id="studentShow">
+    <h1>More Student Info</h1>
+    <h2>@Model.studentFname @Model.studentLname</h2>
+    <p>Enroll date: @Model.enrolDate</p>
+    <p>Student Number: @Model.studentNumber</p>
+</div>

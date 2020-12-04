@@ -17,16 +17,16 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         private SchoolDbContext School = new SchoolDbContext();
 
         /// <summary>
-        /// Get: api/TeacherData/ListTeacher
+        /// Get: api/TeacherData/ListTeacher/{searchkey}
         /// </summary>
         /// <returns>
         /// will connect to the School database and return the result of the List of teachers 
-        /// with the first name and last name as we have coded our while loop to do
+        /// with the first name and last name or we can search for a specfic name to look up teacher information as we have coded our while loop to do
         /// <example>"<string>Alexander Bennett</string>"</example>
         /// </returns>
         [HttpGet]
-        [Route("Api/TeacherData/ListTeachers")]
-        public IEnumerable<Teacher> ListTeachers()
+        [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
+        public IEnumerable<Teacher> ListTeachers(string SearchKey = null)
         {
             List<Teacher> TeacherNames = new List<Teacher> { };
 
@@ -41,7 +41,12 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
             MySqlCommand schooldbcmd = Conn.CreateCommand();
 
             //this is a command we are sending to our connect database once we put in execute our get method
-            schooldbcmd.CommandText = "Select * from teachers";
+            schooldbcmd.CommandText = "Select * from teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key)";
+
+            //@ key - to prevert SQLinjection attacks
+            //adding innew parameters to ensure user is still able to search teacher data by lower or upper case string inserted in the search text
+            schooldbcmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
+
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = schooldbcmd.ExecuteReader();
@@ -77,7 +82,7 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         /// </summary>
         /// <param name="id">we click om the list of teachers we are able to get more info</param>
         /// <returns>teacher infor such as hire date, employee number, salary.</returns>
-        
+
         [HttpGet]
         [Route("api/TeacherData/Teacherinfo/{id}")]
         public Teacher Teacherinfo(int id)
@@ -108,20 +113,119 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
 
 
             }
-            
+
             return moreteacherInfo;
         }
+        ///<summary>
+        ///Investigating post request to delete teachers from the database  
+        ///</summary>
+        ///<returns>Delete confirmation screen and once confirmed, deletes the teacher name and info from the database
+        ///</returns>
 
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            //creating and opening a connection to the "teacher database" to pull info from
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+
+            //establishing a command to send to the database 
+            MySqlCommand schooldbcmd = Conn.CreateCommand();
+            schooldbcmd.CommandText = "delete from teachers where teacherid=@id";
+            schooldbcmd.Parameters.AddWithValue("@id", id);
+            schooldbcmd.Prepare();
+
+            //excute a non select statment
+            schooldbcmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
+            //no return need as it will be deleting the teacher and bringing the user back to list page
+
+        }
+
+        [HttpPost]
+        public void AddTeacher([FromBody] Teacher NewTeacher)
+        {
+            //creating and opening a connection to the "students database" to pull info from
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+
+            //establishing a command to send to the database 
+            MySqlCommand schooldbcmd = Conn.CreateCommand();
+
+            //SQL QUERY to insert new teachers 
+            schooldbcmd.CommandText = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@teacherFname,@teacherLname,@employeeNumber, TIMESTAMP(@hireDate), @saLary)";
+            //NOTE: TIMESTAMP value obtained from Simon's class on data types. dateTime was not working for me.
+
+
+            //what values are we getting and where are we going to get it from
+            schooldbcmd.Parameters.AddWithValue("@teacherFname", NewTeacher.teacherFname);
+            schooldbcmd.Parameters.AddWithValue("@teacherLname", NewTeacher.teacherLname);
+            schooldbcmd.Parameters.AddWithValue("@employeeNumber", NewTeacher.employeeNumber);
+            schooldbcmd.Parameters.AddWithValue("@hireDate", NewTeacher.hireDate);
+            schooldbcmd.Parameters.AddWithValue("@saLary", NewTeacher.saLary);
+
+            schooldbcmd.Prepare();
+
+            //excute a non select statment
+            schooldbcmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
+        }
+
+        [HttpPost]
+        public void UpdateTeacher(int id, [FromBody] Teacher UpdatedTeacherInfo)
+        {
+            //creating and opening a connection to the "students database" to pull info from
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+
+            //establishing a command to send to the database 
+            MySqlCommand schooldbcmd = Conn.CreateCommand();
+
+            //SQL QUERY to insert new teachers 
+            schooldbcmd.CommandText = "update teachers set teacherfname=@teacherFname, teacherlname=@teacherLname, employeenumber=@employeeNumber, hiredate=TIMESTAMP(@hireDate), salary=@saLary where teacherid=@teacherId";
+            //NOTE: TIMESTAMP value obtained from Simon's class on data types. dateTime was not working for me.
+
+
+            //what values are we getting and where are we going to get it from
+            schooldbcmd.Parameters.AddWithValue("@teacherFname", UpdatedTeacherInfo.teacherFname);
+            schooldbcmd.Parameters.AddWithValue("@teacherLname", UpdatedTeacherInfo.teacherLname);
+            schooldbcmd.Parameters.AddWithValue("@employeeNumber", UpdatedTeacherInfo.employeeNumber);
+            schooldbcmd.Parameters.AddWithValue("@hireDate", UpdatedTeacherInfo.hireDate);
+            schooldbcmd.Parameters.AddWithValue("@saLary", UpdatedTeacherInfo.saLary);
+            schooldbcmd.Parameters.AddWithValue("@teacherId", id);
+
+
+            schooldbcmd.Prepare();
+
+            //excute a non select statment
+            schooldbcmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
+
+
+
+        }
 
 
 
     }
 
-
-
 }
 
-/*
+/*CODE HAS BEEN UPDATED TO SHOW TEACHERS WHEN SEARCHED (DEC 1/2020)
+ * added in search method and investigated the SQL injection attacks in the teahcers controller.
+ * 
+ * 
+ * 
+ * CODE UPDATED (NOV 11/2020)
  * PRACTICE CODE TO SEE WHAT WOULD WORK!!
  ****figure out how to declare date and time for a variable
  *  Teacher.TeacherId = (int)ResultSet["teacherid"];

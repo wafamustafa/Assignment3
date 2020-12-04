@@ -4,9 +4,19 @@
 }
 
 <h1>Welcome To The Teachers Page</h1>
+<div>
+    <nav>
+        <h4><a class="listlink" style="margin-top:30px; display:block;" href="/Teacher/Add">Add Teacher</a></h4>
+    </nav>
+</div>
     <div id="subheading">
-        <h3>Here is a list of teachers</h3>
+        <h3>Please enter teacher's name</h3>
     </div>
+    <form action="/Teacher/List" method="GET">
+        <input type="text" name="SearchKey"/>
+        <input type="submit" value="Search"/>
+    </form>
+
     <div id="teachersList">
     <h5>Please pick a Teacher to get more info</h5>
     @foreach (var Teacher in Model)

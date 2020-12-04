@@ -1,0 +1,36 @@
+﻿@model Assignment3_N01450753_WafaMustafa_5101B.Models.Teacher
+@{
+    ViewBag.Title = "Update";
+}
+
+<a style="font-size:1em; margin-top:2em;" href="/Teacher/Show/@Model.teacherId">Back</a>
+<div>
+    <h2>Update</h2>
+    <form method="POST" action="/Teacher/Update/@Model.teacherId">
+        <div>
+            <label for="teacherFname">Fist Name:</label>
+            <input type="text" id="teacherFname" name="teacherFname" value="@Model.teacherFname"/>
+        </div>
+        <div>
+            <label for="teacherLname">Last Name:</label>
+            <input type="text" id="teacherLname" name="teacherLname" value="@Model.teacherLname"/>
+        </div>
+        <div>
+            <label for="employeeNumber">Employee Number:</label>
+            <input type="text" id="employeeNumber" name="employeeNumber" value="@Model.employeeNumber"/>
+        </div>
+        <div>
+            <label for="hireDate">Hire Date:</label>
+            <input type="datetime" id="hireDate" name="hireDate" value="@Model.hireDate"/>
+        </div>
+        <div>
+            <label for="saLary">Salary:</label>
+            <input type="number" id="saLary" name="saLary" value="@Model.saLary"/>
+        </div>
+        <div>
+            <input type="submit" value="Update Teacher"/>
+        </div>
+    </form>
+</div>
+
+

@@ -3,12 +3,15 @@
     ViewBag.Title = "ShowStudents";
 }
 
-<h1><a href="/Student/ListStudents">Show More Students</a></h1>
-
 
 <div id="studentShow">
-    <h1>More Student Info</h1>
+    <nav>
+        <h4><a class="listlink" href="/Student/ListStudents">Back to student list</a></h4>
+        <h4><a class="dellink" href="/Student/DeleteStudent/@Model.studentId">Delete Student</a></h4>
+    </nav>
+    <h1>Student Info</h1>
     <h2>@Model.studentFname @Model.studentLname</h2>
     <p>Enroll date: @Model.enrolDate</p>
     <p>Student Number: @Model.studentNumber</p>
+
 </div>

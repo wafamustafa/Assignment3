@@ -1,0 +1,18 @@
+﻿@model Assignment3_N01450753_WafaMustafa_5101B.Models.Students
+@{
+    ViewBag.Title = "DeleteStudent";
+}
+
+<div id="studentShow">
+    <nav>
+        <h4><a class="listlink" style="margin-top:30px; display:block;" href="/Student/ShowStudents/@Model.studentId">Cancel</a></h4>
+    </nav>
+
+    <h2>Are you sure you want to delete @Model.studentFname @Model.studentLname from  the database?</h2>
+    <p>You will not be able to get the information once deleted</p>
+    <form method="POST" action="/Student/DeleteConfirm/@Model.studentId">
+        <button style="display:block; margin: 0 auto; color:red;">
+        Confirm Delete</button>
+    </form>
+ 
+</div>

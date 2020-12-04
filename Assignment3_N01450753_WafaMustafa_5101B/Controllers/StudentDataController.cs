@@ -15,7 +15,6 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         // Db context class which will allow my Get method to access the MySql SchoolDb and get the list of students 
         private SchoolDbContext Schoolstudents = new SchoolDbContext();
 
-
         [HttpGet]
         [Route("api/StudentData/ListStudents")]
         public IEnumerable<Students> ListStudents()
@@ -90,11 +89,40 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
                 morestudentInfo.studentNumber = morestuInfo["studentnumber"].ToString();
                 morestudentInfo.enrolDate = morestuInfo["enroldate"].ToString();
 
-
-
             }
 
             return morestudentInfo;
+        }
+
+
+        ///<summary>
+        ///Investigating post request to delete students from the database as an added practice 
+        ///</summary>
+        ///<returns>delete confirmation screen and once confirmed, deletes the student name and info from the database
+        ///</returns>
+        
+        [HttpPost]
+        [Route("api/StudentData/DeleteStudent/{id}")]
+        public void DeleteStudent(int id)
+        {
+            //creating and opening a connection to the "students database" to pull info from
+            MySqlConnection Conn = Schoolstudents.AccessDatabase();
+            Conn.Open();
+
+            //establishing a command to send to the database 
+            MySqlCommand schooldbcmd = Conn.CreateCommand();
+            schooldbcmd.CommandText = "delete from students where studentid=@id";
+            schooldbcmd.Parameters.AddWithValue("@id", id);
+            schooldbcmd.Prepare();
+
+            //excute a non select statment
+            schooldbcmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+            //no return need as it will be deleting the student and bringing the user back to list page
+
+
         }
     }
 }

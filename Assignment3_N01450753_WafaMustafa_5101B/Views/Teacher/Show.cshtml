@@ -3,8 +3,18 @@
     ViewBag.Title = "Show";
 }
 
-<h1><a href="/Teacher/List">Teachers</a></h1>
-<h2>Teachers Personal Information</h2>
+<nav>
+    <div>
+        <a style="font-size:1em; margin-top:2em;" href="/Teacher/List">Back to teachers list</a>
+    </div>
+    <div>
+        <a style="font-size:1em; margin-top:2em;" href="/Teacher/Update/@Model.teacherId">Update teacher information</a>
+    </div>
+    <div>
+        <a style="font-size:1em; float:right; margin-top:2em; color:red;" href="/Teacher/DeleteConfirm/@Model.teacherId">Delete teacher</a>
+    </div>
+</nav>
+<h1>Teachers Personal Information</h1>
 <div id="teachersShow">
     <h2>@Model.teacherFname @Model.teacherLname</h2>
     <p>Hire date: @Model.hireDate</p>

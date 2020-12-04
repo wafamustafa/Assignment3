@@ -15,3 +15,24 @@ select,
 textarea {
     max-width: 280px;
 }
+nav{
+    overflow:hidden;
+    margin-bottom:30px;
+}
+a .listlink {
+    display:block;
+    float:right;
+}
+a .dellink {
+    display:block;
+    float:right;
+    color: #dd1111;
+}
+
+#studentShow, #studentList{
+    width:80px;
+    margin:0 auto;
+    margin-top:80px;
+}
+
+

@@ -35,6 +35,26 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
             return View(morestudentInfo);
 
         }
+
+        //GET: Student/DeleteStudent/{id}
+        public ActionResult DeleteStudent(int id)
+        {
+            StudentDataController controller = new StudentDataController();
+            Students morestudentInfo = controller.Studentinfo(id);
+
+            return View(morestudentInfo);
+
+        }
+
+        //POST: Student/DeleteConfirm/{id}
+        [HttpPost]
+        public ActionResult DeleteConfirm(int id)
+        {
+            StudentDataController controller = new StudentDataController();
+            controller.DeleteStudent(id);
+            return RedirectToAction("ListStudents");
+
+        }
     }
 
 

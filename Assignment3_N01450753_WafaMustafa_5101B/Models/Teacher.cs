@@ -16,5 +16,7 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Models
         public DateTime hireDate;
         public decimal saLary;
 
+        //referance from your video to add in the database
+        public Teacher() { }
     }
 }

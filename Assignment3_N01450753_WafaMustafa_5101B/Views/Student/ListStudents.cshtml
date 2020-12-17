@@ -11,7 +11,7 @@
     <h5>Please pick a Student to get more info</h5>
     @foreach (var Students in Model)
     {
-        <div class="listitem row">
+        <div class="listlink">
             <div class="col-md-12">
                 <a href="/Student/ShowStudents/@Students.studentId">@Students.studentFname @Students.studentLname</a>
             </div>

@@ -11,7 +11,7 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
 {
     public class TeacherController : Controller
     {
-        //USED INDEX PAGE TO CREAT BUTTONS FOR TEACHERS AND STUDENTS
+        //USED INDEX PAGE TO CREATE BUTTONS FOR TEACHERS AND STUDENTS
         // GET: Teacher
         public ActionResult index()
         {
@@ -47,7 +47,7 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
             return View(moreteacherInfo);
         }
 
-        /* my delete requestis not completweing and im not sure why. I did a practise run for my students database and i managed to delete a few student... but unfortunately I wasnt able to do the same. Once I click confirm delete I get HTTP ERROR 404 and the url bar turns to http://localhost:63138/Teacher/DeleteConfirm/Teacher/Delete/13 */
+        /* my delete request is not completeing and im not sure why. I did a practise run for my students database and i managed to delete a few student... but unfortunately I wasnt able to do the same. Once I click confirm delete I get HTTP ERROR 404 and the url bar turns to http://localhost:63138/Teacher/DeleteConfirm/Teacher/Delete/13 */
 
 
         //POST: Teacher/Delete/{id}
@@ -61,17 +61,19 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         }
 
 
-
         //GET: Teacher/Add
         public ActionResult Add()
         {
-
-
             return View();
 
-
-
         }
+
+        //GET : Teacher/Ajax_Add
+        public ActionResult Ajax_Add()
+        {
+            return View();
+        }
+
 
         //POST: Teacher/Create
         [HttpPost]
@@ -108,18 +110,29 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
             
         }
 
-        /// <summary>
-        /// this is where we are able to change info on teachers and have it display on the show page
-        /// </summary>
-        /// <param name="id">selects the teacher we want to update</param>
-        /// <param name="teacherFname"></param>
-        /// <param name="teacherLname"></param>
-        /// <param name="employeeNumber"></param>
-        /// <param name="hireDate"></param>
-        /// <param name="saLary"></param>
-        /// <returns></returns>
+        public ActionResult Ajax_Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher UpdatedTeacher = controller.Teacherinfo(id);
 
-        //POST: Teacher/Update/{id}
+            return View(UpdatedTeacher);
+
+        }
+
+
+
+            /// <summary>
+            /// this is where we are able to change info on teachers and have it display on the show page
+            /// </summary>
+            /// <param name="id">selects the teacher we want to update</param>
+            /// <param name="teacherFname"></param>
+            /// <param name="teacherLname"></param>
+            /// <param name="employeeNumber"></param>
+            /// <param name="hireDate"></param>
+            /// <param name="saLary"></param>
+            /// <returns></returns>
+
+            //POST: Teacher/Update/{id}
         [HttpPost]
         public ActionResult Update(int id, string teacherFname, string teacherLname, string employeeNumber, DateTime hireDate, decimal saLary)
         {

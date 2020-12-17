@@ -107,3 +107,6 @@ C:\Users\mustafa\source\repos\Assignment3_N01450753_WafaMustafa_5101B\Assignment
 C:\Users\mustafa\source\repos\Assignment3_N01450753_WafaMustafa_5101B\Assignment3_N01450753_WafaMustafa_5101B\bin\System.Memory.xml
 C:\Users\mustafa\source\repos\Assignment3_N01450753_WafaMustafa_5101B\Assignment3_N01450753_WafaMustafa_5101B\bin\System.Numerics.Vectors.xml
 C:\Users\mustafa\source\repos\Assignment3_N01450753_WafaMustafa_5101B\Assignment3_N01450753_WafaMustafa_5101B\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\mustafa\source\repos\Assignment3_N01450753_WafaMustafa_5101B\Assignment3_N01450753_WafaMustafa_5101B\bin\System.Web.Cors.dll
+C:\Users\mustafa\source\repos\Assignment3_N01450753_WafaMustafa_5101B\Assignment3_N01450753_WafaMustafa_5101B\bin\System.Web.Http.Cors.dll
+C:\Users\mustafa\source\repos\Assignment3_N01450753_WafaMustafa_5101B\Assignment3_N01450753_WafaMustafa_5101B\bin\System.Web.Http.Cors.xml

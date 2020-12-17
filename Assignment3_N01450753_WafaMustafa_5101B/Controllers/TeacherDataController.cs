@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Routing;
 using Assignment3_N01450753_WafaMustafa_5101B.Models;
 using MySql.Data.MySqlClient;
+using System.Web.Http.Cors;
 
 namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
 {
@@ -26,6 +27,7 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         /// </returns>
         [HttpGet]
         [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
+        [EnableCors(origins: "*", methods:"*", headers:"*")]
         public IEnumerable<Teacher> ListTeachers(string SearchKey = null)
         {
             List<Teacher> TeacherNames = new List<Teacher> { };
@@ -85,6 +87,7 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
 
         [HttpGet]
         [Route("api/TeacherData/Teacherinfo/{id}")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public Teacher Teacherinfo(int id)
         {
             //creating a return type when id number is selected
@@ -123,6 +126,7 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         ///</returns>
 
         [HttpPost]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void DeleteTeacher(int id)
         {
             //creating and opening a connection to the "teacher database" to pull info from
@@ -146,10 +150,17 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         }
 
         [HttpPost]
+        [Route("api/TeacherData/AddTeacher")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void AddTeacher([FromBody] Teacher NewTeacher)
         {
             //creating and opening a connection to the "students database" to pull info from
             MySqlConnection Conn = School.AccessDatabase();
+
+            //create a validation method to insure all field are valid
+            if (!NewTeacher.IsValid()) return;
+
+            //opening connection
             Conn.Open();
 
             //establishing a command to send to the database 
@@ -178,10 +189,17 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
         }
 
         [HttpPost]
+        [Route("api/TeacherData/UpdateTeacher/{id}")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void UpdateTeacher(int id, [FromBody] Teacher UpdatedTeacherInfo)
         {
             //creating and opening a connection to the "students database" to pull info from
             MySqlConnection Conn = School.AccessDatabase();
+
+            //validation for update
+            if (!UpdatedTeacherInfo.IsValid()) return;
+
+            //opening connection to the data base
             Conn.Open();
 
             //establishing a command to send to the database 
@@ -220,7 +238,11 @@ namespace Assignment3_N01450753_WafaMustafa_5101B.Controllers
 
 }
 
-/*CODE HAS BEEN UPDATED TO SHOW TEACHERS WHEN SEARCHED (DEC 1/2020)
+/*CODE HAS BEEN UPDATED DECEMBER 16 for add in validation for "Add" and "update" teachers 
+ * 
+ * 
+ * 
+ * CODE HAS BEEN UPDATED TO SHOW TEACHERS WHEN SEARCHED (DEC 1/2020)
  * added in search method and investigated the SQL injection attacks in the teahcers controller.
  * 
  * 

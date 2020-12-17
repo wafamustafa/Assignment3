@@ -11,6 +11,9 @@ namespace Assignment3_N01450753_WafaMustafa_5101B
         {
             // Web API configuration and services
 
+            config.EnableCors();
+
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
